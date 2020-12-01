@@ -1,11 +1,17 @@
 class Queue:
-    list = []
-#    def __init__(self):
-#        self.list = []
+    def __init__(self):
+        self.list = []
 
     def enqueue(self, item):
         self.list.append(item)
 
+    def dequeue(self):
+        dequeue_elem = self.list.pop(0)
+        return dequeue_elem
+
+    def is_empty(self):
+        return self.list == []
+ 
 
 class Node:
     def __init__(self, data):
@@ -29,13 +35,25 @@ class Node:
             self.data = data
 
     def print_tree(self):
-        if self.data != None:
-            Queue.enqueue(self, self.data)
-        if self.left:
-            self.left.print_tree()
-        if self.right:
-            self.right.print_tree()
-        return
+        res = Queue()
+        res.enqueue(self.data)
+        count = 0
+        while not res.is_empty() and count < 10:
+            if self.left != None:
+                res.enqueue(self.left)
+                self.left = self.data
+                tmp = res.dequeue()
+                print(tmp)
+            if self.right != None:
+                res.enqueue(self.right)
+                self.right = self.data
+                tmp2 = res.dequeue()
+                print(tmp2)
+            count += 1
+
+
+
+
 
 
 root = Node(15)
