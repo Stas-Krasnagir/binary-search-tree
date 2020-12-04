@@ -1,68 +1,81 @@
 class Queue:
     def __init__(self):
-        self.list = []
+        self.item = []
 
     def enqueue(self, item):
-        self.list.append(item)
+        self.item.insert(0, item)
 
     def dequeue(self):
-        dequeue_elem = self.list.pop(0)
-        return dequeue_elem
+        if not self.is_empty():
+            return self.item.pop()
 
     def is_empty(self):
-        return self.list == []
- 
+        return len(self.item) == 0
+
+
+    def peek(self):
+        if not self.is_empty():
+            return self.item[-1].data
+
+
 
 class Node:
-    def __init__(self, data):
+    def __init__(self, data=None):
+        self.data = data
         self.left = None
         self.right = None
-        self.data = data
+
+
+class Tree:
+    def __init__(self):
+        self.root = None
 
     def insert(self, data):
-        if self.data:
-            if data < self.data:
-                if self.left is None:
-                    self.left = Node(data)
-                else:
-                    self.left.insert(data)
-            elif data > self.data:
-                if self.right is None:
-                    self.right = Node(data)
-                else:
-                    self.right.insert(data)
+        if self.root is None:
+            self.root = Node(data)
         else:
-            self.data = data
+            self._insert(data, self.root)
 
-    def print_tree(self):
-        res = Queue()
-        res.enqueue(self.data)
-        count = 0
-        while not res.is_empty() and count < 10:
-            if self.left != None:
-                res.enqueue(self.left)
-                self.left = self.data
-                tmp = res.dequeue()
-                print(tmp)
-            if self.right != None:
-                res.enqueue(self.right)
-                self.right = self.data
-                tmp2 = res.dequeue()
-                print(tmp2)
-            count += 1
+    def _insert(self, data, cur_node):
+        if data < cur_node.data:
+            if cur_node.left is None:
+                cur_node.left = Node(data)
+            else:
+                self._insert(data, cur_node.left)
+        elif data > cur_node.data:
+            if cur_node.right is None:
+                cur_node.right = Node(data)
+            else:
+                self._insert(data, cur_node.right)
+        else:
+            print("END")
 
 
 
+    def print_tree(self, root):
+
+        queue = Queue()
+        queue.enqueue(root)
+        res = ""
+        while len(queue) > 0:
+            res += str(queue.peek()) + "-"
+            node = queue.dequeue()
+            if node.left:
+                queue.enqueue(node.left)
+            if node.right:
+                queue.enqueue(node.right)
+        return res
 
 
 
-root = Node(15)
-root.insert(10)
-root.insert(20)
-root.insert(22)
-root.insert(3)
-root.insert(7)
-root.insert(21)
-root.insert(12)
 
-root.print_tree()
+test = Tree()
+test.insert(10)
+test.insert(20)
+test.insert(22)
+test.insert(3)
+test.insert(7)
+test.insert(21)
+test.insert(12)
+
+print(test.print_tree())
