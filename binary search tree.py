@@ -12,11 +12,12 @@ class Queue:
     def is_empty(self):
         return len(self.item) == 0
 
-
     def peek(self):
         if not self.is_empty():
             return self.item[-1].data
 
+    def __len__(self):
+        return len(self.item)
 
 
 class Node:
@@ -24,6 +25,20 @@ class Node:
         self.data = data
         self.left = None
         self.right = None
+
+
+def print_tree():
+    queue = Queue()
+    queue.enqueue(test.root)
+    res = ""
+    while len(queue) > 0:
+        res += str(queue.peek()) + " "
+        node = queue.dequeue()
+        if node.left:
+            queue.enqueue(node.left)
+        if node.right:
+            queue.enqueue(node.right)
+    return res
 
 
 class Tree:
@@ -51,24 +66,6 @@ class Tree:
             print("END")
 
 
-
-    def print_tree(self, root):
-
-        queue = Queue()
-        queue.enqueue(root)
-        res = ""
-        while len(queue) > 0:
-            res += str(queue.peek()) + "-"
-            node = queue.dequeue()
-            if node.left:
-                queue.enqueue(node.left)
-            if node.right:
-                queue.enqueue(node.right)
-        return res
-
-
-
-
 test = Tree()
 test.insert(10)
 test.insert(20)
@@ -77,5 +74,16 @@ test.insert(3)
 test.insert(7)
 test.insert(21)
 test.insert(12)
+test.insert(1)
+test.insert(2)
+test.insert(24)
 
-print(test.print_tree())
+print(print_tree())
+
+#           10
+#         /    \
+#        3      20
+#       / \     / \
+#      1   7   12  22
+#       \          / \
+#        2        21  24
