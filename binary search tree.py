@@ -21,6 +21,10 @@ class Queue:
 
 
 class Node:
+    """
+    Class Node
+    """
+
     def __init__(self, data=None):
         self.data = data
         self.left = None
@@ -28,10 +32,20 @@ class Node:
 
 
 class Tree:
+    """
+    Class tree will provide a tree as well as utility functions.
+    """
+
     def __init__(self):
+        """
+        Utility function to create a root.
+        """
         self.root = None
 
     def insert(self, data):
+        """
+        Insert function will insert a data into tree.
+        """
         if self.root is None:
             self.root = Node(data)
         else:
@@ -51,44 +65,68 @@ class Tree:
         else:
             print("END")
 
-def print_tree():
-    queue = Queue()
-    queue.enqueue(test.root)
-    res = ""
-    while len(queue) > 0:
-        res += str(queue.peek()) + " "
-        node = queue.dequeue()
-        if node.left:
-            queue.enqueue(node.left)
-        if node.right:
-            queue.enqueue(node.right)
-    return res
+    def print_tree(self):
+        """
+        This function will print tree.
+        """
+        queue = Queue()
+        queue.enqueue(self.root)
+        res = ""
+        while len(queue) > 0:
+            res += str(queue.peek()) + " "
+            node = queue.dequeue()
+            if node.left:
+                queue.enqueue(node.left)
+            if node.right:
+                queue.enqueue(node.right)
+        return res
 
-def delete_recursively(test, x):
-    if test.root is None:
-        return None
-    if x < test.root.data:
-        test.root.left = delete_recursively(test.root.left, x)
-        return test.root
-    elif x > test.root.data:
-        test.root.right = delete_recursively(test.root.right, x)
-        return test.root
-    if test.root.left is None:
-        return test.root.right
-    elif test.root.right is None:
-        return test.root.left
-    else:
-        min_key = find_min(test.root.right)
-        test.root.data = min_key
-        test.root.right = delete_recursively(test.root.right, min_key)
-        return test.root
+    def find_min(self, root):
+        if self.root.left is not None:
+            return self.find_min(root.left)
+        else:
+            return self.root
 
-def find_min(test):
-    if test.root.left != None:
-        return find_min(test.root.left)
-    else:
-        return test.root
+    def delete_recursively(self, root, delete_root):
+        """
+        Delete function will delete a node into tree.
+        """
+        if root is None:
+            return None
+        if delete_root < root.data:
+            root.left = self.delete_recursively(root.left, delete_root)
+        elif delete_root > root.data:
+            root.right = self.delete_recursively(root.right, delete_root)
+        else:
+            if root.left is None and root.right is None:
+                del root
+            if root.left is None:
+                temp = root.right
+                del root
+                return temp
+            elif root.right is None:
+                temp = root.left
+                del root
+                return temp
+        return root
 
+
+#        if self.root is None:
+#            return self.root
+#        if delete_root < self.root.data:
+#            self.root.left = self.delete_recursively(self.root.left, delete_root)
+#        elif delete_root > self.root.data:
+#            self.root.right = self.delete_recursively(self.root.right, delete_root)
+#            return self.root
+#        if self.root.left is None:
+#            return self.root.right
+#        elif self.root.right is None:
+#            return self.root.left
+#        else:
+#            min_key = self.find_min(self.root.right).data
+#            self.root.data = min_key
+#            self.root.right = self.delete_recursively(self.root.right, min_key)
+#            return self.root
 
 
 test = Tree()
@@ -103,13 +141,12 @@ test.insert(1)
 test.insert(2)
 test.insert(24)
 
-print(print_tree())
+print(test.print_tree())
 
-x = int(input("Delete element: "))
-delete_recursively(test, x)
+delete_root = int(input("Delete element: "))
+test.delete_recursively(root, delete_root)
 
-print(print_tree())
-
+print(test.print_tree())
 
 #           10
 #         /    \
