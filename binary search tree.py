@@ -27,20 +27,6 @@ class Node:
         self.right = None
 
 
-def print_tree():
-    queue = Queue()
-    queue.enqueue(test.root)
-    res = ""
-    while len(queue) > 0:
-        res += str(queue.peek()) + " "
-        node = queue.dequeue()
-        if node.left:
-            queue.enqueue(node.left)
-        if node.right:
-            queue.enqueue(node.right)
-    return res
-
-
 class Tree:
     def __init__(self):
         self.root = None
@@ -65,6 +51,45 @@ class Tree:
         else:
             print("END")
 
+def print_tree():
+    queue = Queue()
+    queue.enqueue(test.root)
+    res = ""
+    while len(queue) > 0:
+        res += str(queue.peek()) + " "
+        node = queue.dequeue()
+        if node.left:
+            queue.enqueue(node.left)
+        if node.right:
+            queue.enqueue(node.right)
+    return res
+
+def delete_recursively(test, x):
+    if test.root is None:
+        return None
+    if x < test.root.data:
+        test.root.left = delete_recursively(test.root.left, x)
+        return test.root
+    elif x > test.root.data:
+        test.root.right = delete_recursively(test.root.right, x)
+        return test.root
+    if test.root.left is None:
+        return test.root.right
+    elif test.root.right is None:
+        return test.root.left
+    else:
+        min_key = find_min(test.root.right)
+        test.root.data = min_key
+        test.root.right = delete_recursively(test.root.right, min_key)
+        return test.root
+
+def find_min(test):
+    if test.root.left != None:
+        return find_min(test.root.left)
+    else:
+        return test.root
+
+
 
 test = Tree()
 test.insert(10)
@@ -79,6 +104,12 @@ test.insert(2)
 test.insert(24)
 
 print(print_tree())
+
+x = int(input("Delete element: "))
+delete_recursively(test, x)
+
+print(print_tree())
+
 
 #           10
 #         /    \
