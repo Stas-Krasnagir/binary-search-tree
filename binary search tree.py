@@ -21,10 +21,6 @@ class Queue:
 
 
 class Node:
-    """
-    Class Node
-    """
-
     def __init__(self, data=None):
         self.data = data
         self.left = None
@@ -32,20 +28,10 @@ class Node:
 
 
 class Tree:
-    """
-    Class tree will provide a tree as well as utility functions.
-    """
-
     def __init__(self):
-        """
-        Utility function to create a root.
-        """
         self.root = None
 
     def insert(self, data):
-        """
-        Insert function will insert a data into tree.
-        """
         if self.root is None:
             self.root = Node(data)
         else:
@@ -66,9 +52,6 @@ class Tree:
             print("END")
 
     def print_tree(self):
-        """
-        This function will print tree.
-        """
         queue = Queue()
         queue.enqueue(self.root)
         res = ""
@@ -87,10 +70,7 @@ class Tree:
         else:
             return self.root
 
-    def delete_recursively(self, root, delete_root):
-        """
-        Delete function will delete a node into tree.
-        """
+    def delete_recursively(self, delete_root):
         if root is None:
             return None
         if delete_root < root.data:
@@ -99,14 +79,14 @@ class Tree:
             root.right = self.delete_recursively(root.right, delete_root)
         else:
             if root.left is None and root.right is None:
-                del root
+                root.data = None
             if root.left is None:
                 temp = root.right
-                del root
+                root.data = None
                 return temp
             elif root.right is None:
                 temp = root.left
-                del root
+                root.data = None
                 return temp
         return root
 
@@ -144,7 +124,7 @@ test.insert(24)
 print(test.print_tree())
 
 delete_root = int(input("Delete element: "))
-test.delete_recursively(root, delete_root)
+test.delete_recursively(delete_root)
 
 print(test.print_tree())
 
