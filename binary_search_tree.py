@@ -5,7 +5,7 @@ class Node:
         self.data = data
         self.left = None
         self.right = None
-        self.parent = None
+
 
 
 class Tree:
@@ -22,13 +22,11 @@ class Tree:
         if data < cur_node.data:
             if cur_node.left is None:
                 cur_node.left = Node(data)
-                cur_node.parent = cur_node.left
             else:
                 self._insert(data, cur_node.left)
         elif data > cur_node.data:
             if cur_node.right is None:
                 cur_node.right = Node(data)
-                cur_node.parent = cur_node.right
             else:
                 self._insert(data, cur_node.right)
         else:
@@ -69,58 +67,25 @@ class Tree:
         return self.minimum(self, root.left)
 
 
-    def next(self, root):
-        if root.right is not None:
-            return self.minimum(root.right)
-        y = self.root.parent
-        while y is not None and self.root == y.right:
-            self.root = y
-            y = y.parent
-        return y
-
-    def delete(self, x):
-        pass
-        p = x.parent
-        if x.left is None and x.right is None:
-            if p.left == x:
-                p.left = None
-            if p.right == x:
-                p.right = None
-        elif x.left is None or x.right is None:
-            if x.left is None:
-                if p.left == x:
-                    p.left = x.right
-                else:
-                    p.right = x.right
-                x.right.parent = p
-            else:
-                if p.left == x:
-                    p.left = x.left
-                else:
-                    p.right = x.left
-                x.left.parent = p
+    def delete_recursively(self, x):
+        if root is None:
+            return None
+        if x < root.data:
+            root.left = self.delete_recursively(root.left, x)
+        elif x > root.data:
+            root.right = self.delete_recursively(root.right, x)
         else:
-            successor = next(x, t)
-            x.data = successor.data
-            if successor.parent.left == successor:
-                successor.parent.left = successor.right
-                if successor.right != null:
-                    successor.right.parent = successor.parent
-            else:
-                successor.parent.right = successor.left
-                if successor.left != null:
-                    successor.right.parent = successor.parent
-
-    def delete_recursion(self, x):
-        if self.root.data == x:
-            if self.root.left in None and self.root.right is None:
-                self.root.data = None
-            if self.root.left is not None and self.root.right is None:
-                self.root.data = self.root.left
-            if self.root.right is not None and self.root.left is None:
-                self.root.data = self.root.right
-        else:
-            print("___")
+            if root.left is None and root.right is None:
+                root.data = None
+            if root.left is None:
+                temp = root.right
+                root.data = None
+                return temp
+            elif root.right is None:
+                temp = root.left
+                root.data = None
+                return temp
+        return root
 
 
 test = Tree()
@@ -137,12 +102,8 @@ test.insert(24)
 
 
 print(test.print_tree())
-
 x = int(input("Delete element: "))
-test.delete(x)
-
-test.delete_recursion(x)
-
+test.delete_recursively(x)
 print(test.print_tree())
 
 #           10
