@@ -45,10 +45,6 @@ class Tree:
                 queue.enqueue(node.right)
         return res
 
-    def minimum(self, root):
-        if self.root.left is None:
-            return root
-        return self.minimum(self, root.left)
 
     def delete_recursively(self, x):
         if self.root is None:
@@ -57,7 +53,7 @@ class Tree:
             self.root.left = self.delete_recursively(self.root.left, x)
         elif x > self.root.data:
             self.root.right = self.delete_recursively(self.root.right, x)
-        else:
+        else: # x == data
             if self.root.left is None and self.root.right is None:
                 self.root.data = None
             if self.root.left is None:

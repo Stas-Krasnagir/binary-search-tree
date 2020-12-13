@@ -27,14 +27,6 @@ class TestTree(unittest.TestCase):
         else:
             print("test_insert is FAIL")
 
-    def test_minimum(self):
-        test = Tree()
-        test.insert(10)
-        test.insert(5)
-        test.insert(15)
-        test.insert(3)
-
-        print(test.minimum())
 
     def test_delete_recursively(self):
         pass
