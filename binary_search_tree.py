@@ -1,24 +1,27 @@
+from typing import Generic, TypeVar, Optional
 from queue import Queue
+
+T = TypeVar('T')
 
 
 class Node:
     def __init__(self, data):
-        self.data = data
-        self.left = None
-        self.right = None
+        self.data: T = data
+        self.left: Optional[Node] = None
+        self.right: Optional[Node] = None
 
 
-class Tree:
+class Tree(Generic[T]):
     def __init__(self):
-        self.root = None
+        self.root: Optional[Node] = None
 
-    def insert(self, data):
+    def insert(self, data: int) -> None:
         if self.root is None:
             self.root = Node(data)
         else:
             self._insert(data, self.root)
 
-    def _insert(self, data, cur_node):
+    def _insert(self, data: int, cur_node: Node) -> None:
         if data < cur_node.data:
             if cur_node.left is None:
                 cur_node.left = Node(data)
@@ -35,8 +38,8 @@ class Tree:
     def print_tree(self):
         queue = Queue()
         queue.enqueue(self.root)
-        res = ""
-        while len(queue) > 0:
+        res: str = ""
+        while len(queue.item) > 0:
             res += str(queue.peek()) + " "
             node = queue.dequeue()
             if node.left:
@@ -45,26 +48,33 @@ class Tree:
                 queue.enqueue(node.right)
         return res
 
+    def delete_node(self, node: Node):
+        self.__delete_rec(self.root, node)
 
-    def delete_recursively(self, x):
-        if self.root is None:
-            return None
-        elif x < self.root.data:
-            self.root.left = self.delete_recursively(self.root.left, x)
-        elif x > self.root.data:
-            self.root.right = self.delete_recursively(self.root.right, x)
-        else: # x == data
-            if self.root.left is None and self.root.right is None:
-                self.root.data = None
-            if self.root.left is None:
-                temp = root.right
-                self.root.data = None
-                return temp
-            elif self.root.right is None:
-                temp = root.left
-                self.root.data = None
-                return temp
+    def __minimum(self, node: Node) -> Node:
+        if node.left is None:
+            return node
+        return self.__minimum(node.left)
+
+    def __delete_rec(self, root: Node, x: T):
+        if root is None:
+            return root
+        elif x < root.data:
+            root.left = self.__delete_rec(root.left, x)
+        elif x > root.data:
+            root.right = self.__delete_rec(root.right, x)
+        elif root.left is not None and root.right is not None:
+            root.data = self.__minimum(root.right).data
+            root.right = self.__delete_rec(root.right, root.data)
+        else:
+            if root.left is not None:
+                root.data = root.left
+            elif root.right is not None:
+                root.data = root.right
+            else:
+                root = None
         return root
+
 
 #           10
 #         /    \
@@ -73,3 +83,4 @@ class Tree:
 #      1   7   12  22
 #       \          / \
 #        2        21  24
+

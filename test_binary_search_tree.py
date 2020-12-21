@@ -22,14 +22,31 @@ class TestTree(unittest.TestCase):
             if node.right:
                 queue.enqueue(node.right)
 
-        if res == "10 5 15 ":
-            print("test_insert is OK")
-        else:
-            print("test_insert is FAIL")
+        message = "test_insert is FAIL"
+        res_1 = "10 5 15 "
+        self.assertEqual(res, res_1, message)
 
 
-    def test_delete_recursively(self):
-        pass
+    def test_delete_node(self):
+        Test = Tree()
+        Test.insert(10)
+        Test.insert(3)
+        Test.insert(20)
+        Test.insert(12)
+        Test.insert(22)
+        Test.insert(21)
+        Test.insert(24)
+        Test.insert(1)
+        Test.insert(2)
+        Test.insert(7)
+        Test.delete_node(20)
+
+        res = "10 3 21 1 7 12 22 2 24 "
+        message = "test_delete_node is FAIL"
+        self.assertEqual(Test.print_tree(), res, message)
+
+
+
 
 
 if __name__ == "__main__":
