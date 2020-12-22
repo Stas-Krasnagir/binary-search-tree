@@ -83,4 +83,3 @@ class Tree(Generic[T]):
 #      1   7   12  22
 #       \          / \
 #        2        21  24
-

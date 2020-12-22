@@ -1,5 +1,5 @@
 import unittest
-from binary_search_tree import *
+from src.binary_search_tree import *
 from queue import *
 
 class TestTree(unittest.TestCase):
