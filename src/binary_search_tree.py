@@ -1,5 +1,5 @@
 from typing import Generic, TypeVar, Optional
-from queue import Queue
+from src.queue import *
 
 T = TypeVar('T')
 
@@ -21,7 +21,7 @@ class Tree(Generic[T]):
         else:
             self._insert(data, self.root)
 
-    def _insert(self, data: int, cur_node: Node) -> None:
+    def _insert(self, data, cur_node: Node) -> None:
         if data < cur_node.data:
             if cur_node.left is None:
                 cur_node.left = Node(data)
