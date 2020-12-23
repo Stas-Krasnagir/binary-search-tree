@@ -76,10 +76,4 @@ class Tree(Generic[T]):
         return root
 
 
-#           10
-#         /    \
-#        3      20
-#       / \     / \
-#      1   7   12  22
-#       \          / \
-#        2        21  24
+
