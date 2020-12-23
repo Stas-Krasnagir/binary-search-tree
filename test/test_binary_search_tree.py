@@ -6,13 +6,13 @@ from src.queue import *
 class TestTree(unittest.TestCase):
 
     def test_insert_and_print_tree(self):
-        test = Tree()
-        test.insert(10)
-        test.insert(5)
-        test.insert(15)
+        tree = Tree()
+        tree.insert(10)
+        tree.insert(5)
+        tree.insert(15)
         res = ""
         queue_for_test = Queue()
-        queue_for_test.enqueue(test.root)
+        queue_for_test.enqueue(tree.root)
 
         while len(queue_for_test) > 0:
             res += str(queue_for_test.peek()) + " "
@@ -27,22 +27,22 @@ class TestTree(unittest.TestCase):
         self.assertEqual(res, res_1, message)
 
     def test_delete_node(self):
-        test = Tree()
-        test.insert(10)
-        test.insert(3)
-        test.insert(20)
-        test.insert(12)
-        test.insert(22)
-        test.insert(21)
-        test.insert(24)
-        test.insert(1)
-        test.insert(2)
-        test.insert(7)
-        test.delete_node(20)
+        tree = Tree()
+        tree.insert(10)
+        tree.insert(3)
+        tree.insert(20)
+        tree.insert(12)
+        tree.insert(22)
+        tree.insert(21)
+        tree.insert(24)
+        tree.insert(1)
+        tree.insert(2)
+        tree.insert(7)
+        tree.delete_node(20)
 
         res = "10 3 21 1 7 12 22 2 24 "
         message = "test_delete_node is FAIL"
-        self.assertEqual(test.print_tree(), res, message)
+        self.assertEqual(tree.print_tree(), res, message)
 
 
 if __name__ == "__main__":

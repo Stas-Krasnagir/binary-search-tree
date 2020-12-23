@@ -7,14 +7,14 @@ class TestQueue(unittest.TestCase):
         self.queue = Queue()
 
     def test_enqueue(self):
-        test = Queue()
-        test.enqueue(1)
-        test.enqueue(2)
-        test.enqueue(3)
+        queue = Queue()
+        queue.enqueue(1)
+        queue.enqueue(2)
+        queue.enqueue(3)
         res = []
         count = 0
         while count < 3:
-            res.append(test.dequeue())
+            res.append(queue.dequeue())
             count += 1
         res_1 = [1, 2, 3]
         message = "test_enqueue is FAIL"
@@ -22,9 +22,9 @@ class TestQueue(unittest.TestCase):
 
 
     def test_dequeue(self):
-        test = Queue()
-        test.enqueue(55)
-        res = test.dequeue()
+        queue = Queue()
+        queue.enqueue(55)
+        res = queue.dequeue()
         res_1 = 55
         message = "test_dequeue is FAIL"
         self.assertEqual(res, res_1, message)
